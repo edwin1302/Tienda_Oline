@@ -190,17 +190,17 @@ public class Producto {
         List<Producto> listaProductos = new ArrayList<>();
         String sql = " SELECT * FROM productosORDER BY nombreProducto asc";
         ResultSet rs = conexion.consultarBD(sql);
-        Producto c;
+        Producto p;
         while(rs.next()){
-            c = new Producto();
-            c.setIdProducto(rs.getInt("id_producto"));
-            c.setIdUsuario(rs.getInt("id_usuario"));
-            c.setCategoria(rs.getString("id_categoria"));
-            c.setNombre(rs.getString("nombre"));
-            c.setCantidad(rs.getInt("cantidad"));
-            c.setPrecio(rs.getInt("precio"));
-            c.setEstado(rs.getString("estado"));
-            listaProductos.add(c);
+            p = new Producto();
+            p.setIdProducto(rs.getInt("id_producto"));
+            p.setIdUsuario(rs.getInt("id_usuario"));
+            p.setCategoria(rs.getString("id_categoria"));
+            p.setNombre(rs.getString("nombre"));
+            p.setCantidad(rs.getInt("cantidad"));
+            p.setPrecio(rs.getInt("precio"));
+            p.setEstado(rs.getString("estado"));
+            listaProductos.add(p);
         }
         conexion.cerrarConexion();
         return listaProductos;

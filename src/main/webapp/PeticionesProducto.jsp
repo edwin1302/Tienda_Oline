@@ -1,7 +1,7 @@
 <%-- 
     Document   : PeticionesProducto
     Created on : 27/09/2021, 6:21:50 p. m.
-    Author     : GENESIS
+    Author     : EDWIN
 --%>
 
 <%@page  import="java.util.logging.Logger" %> // para los mensajes del try cahth
@@ -63,7 +63,6 @@
                 Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (proceso.equals("actualizarProducto")) {
-            int idProducto = Integer.parseInt(request.getParameter("idProducto"));
             int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
             int idCategoria = Integer.parseInt(request.getParameter("idategoria"));
             String nombre = request.getParameter("nombre");
