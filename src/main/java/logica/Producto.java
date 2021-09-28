@@ -20,6 +20,7 @@ public class Producto {
     private double precio;
     private String estado;
     private Date fechaCaptura;
+    // private LocalDate hoy = LocalDate.now();
 
     public Producto() {
     }
@@ -96,12 +97,15 @@ public class Producto {
         this.fechaCaptura = fechaCaptura;
     }
     
-    public void llenarProducto(int idUsuario, int idCategoria, String nombre, int cantidad, String categoria, int precio){
+    public void llenarProducto(int idUsuario, int idCategoria, String nombre, int cantidad, String categoria, double precio, String estado){
         this.idUsuario = idUsuario;
         this.idCategoria = idCategoria;
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.categoria = categoria;
+        this.precio = precio;
+        this.estado = estado;
+
     }
     
     public boolean guardarProducto(){
@@ -136,9 +140,9 @@ public class Producto {
         }
     }
     
-    public boolean borrarProducto(){
+    public boolean borrarProducto(int idProducto){
         ConexionBD conexion = new ConexionBD();
-        String sentencia = "DELETE FROM productos WHERE idProducto = '"+this.idProducto+"'";
+        String sentencia = "DELETE FROM productos WHERE idProducto = '"+idProducto+"'";
         
         if(conexion.setAutoCommitBD(false)){
             if(conexion.actualizarBD(sentencia)){
