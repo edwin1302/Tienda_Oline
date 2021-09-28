@@ -18,7 +18,7 @@ public class Producto {
     private int cantidad;
     private String categoria;
     private double precio;
-    private String estado;
+    private String estado = "Activo";
     private Date fechaCaptura;
     // private LocalDate hoy = LocalDate.now();
 

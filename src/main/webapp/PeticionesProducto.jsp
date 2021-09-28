@@ -1,5 +1,5 @@
 <%-- 
-    Document   : Peticiones
+    Document   : PeticionesProducto
     Created on : 27/09/2021, 6:21:50 p. m.
     Author     : GENESIS
 --%>
@@ -33,7 +33,6 @@
     if (tareas.contains(proceso)) {
         // inicio de proceso
         if (proceso.equals("guardarProducto")) {
-            int id_producto = Integer.parseInt(request.getParameter("idProducto"));
             int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
             int idCategoria = Integer.parseInt(request.getParameter("idategoria"));
             String nombre = request.getParameter("nombre");
@@ -44,6 +43,38 @@
             //Date fechaCaptura;
             p.llenarProducto(idUsuario, idCategoria, nombre, cantidad, categoria, precio, estado);
             if (p.guardarProducto()) {
+                respuesta += "\"" + proceso + "\" : true";
+            } else {
+                respuesta += "\"" + proceso + "\" : false";
+            }
+        } else if (proceso.equals("eliminarProducto")) {
+            int idProducto = Integer.parseInt(request.getParameter("idProducto"));
+            if (p.borrarProducto(idProducto)) {
+                respuesta += "\"" + proceso + "\" : true";
+            } else {
+                respuesta += "\"" + proceso + "\" : false";
+            }
+        } else if (proceso.equals("listarProducto")) {
+            try {
+                List<Producto> lista = p.listarProductos();
+                respuesta += "\"" + proceso + "\" : true,\"Productos\":" + new Gson().toJson(lista);
+            } catch (SQLException ex) {
+                respuesta += "\"" + proceso + "\" : true,\"Productos\":[]";
+                Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (proceso.equals("actualizarProducto")) {
+            int idProducto = Integer.parseInt(request.getParameter("idProducto"));
+            int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
+            int idCategoria = Integer.parseInt(request.getParameter("idategoria"));
+            String nombre = request.getParameter("nombre");
+            int cantidad = Integer.parseInt(request.getParameter("cantidad"));
+            String categoria = request.getParameter("categoria");
+            double precio = Double.parseDouble(request.getParameter("precio"));
+            String estado = request.getParameter("estado");
+            //Date fechaCaptura;
+            p.llenarProducto(idUsuario, idCategoria, nombre, cantidad, categoria, precio, estado);
+            
+            if (p.actualizarProducto()) {
                 respuesta += "\"" + proceso + "\" : true";
             } else {
                 respuesta += "\"" + proceso + "\" : false";
