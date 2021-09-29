@@ -65,7 +65,7 @@ public class Usuario {
                 + "fechaCaptura ) VALUES ('"+this.nombre+"',"
                 + "'"+this.email+"',"
                 + "'"+this.password+"',"
-                + "'"+this.fecha+"',)";
+                + "'"+this.fecha+"')";
         
         if(conexion.setAutoCommitBD(false)){
             if(conexion.insertarBD(sentencia)){
@@ -128,7 +128,7 @@ public class Usuario {
     public List<Usuario> listarUsuario() throws SQLException{
         ConexionBD conexion = new ConexionBD();
         List<Usuario> listaUsuarios = new ArrayList<>();
-        String sql = " SELECT * FROM usuarios ORDER BY nombreUsuario asc";
+        String sql = "SELECT * FROM usuarios ORDER BY nombreUsuario asc";
         ResultSet rs = conexion.consultarBD(sql);
         Usuario u;
         while(rs.next()){

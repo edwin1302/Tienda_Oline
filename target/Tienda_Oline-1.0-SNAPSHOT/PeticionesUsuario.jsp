@@ -29,14 +29,15 @@
     String proceso = "" + request.getParameter("proceso");
     Usuario u = new Usuario();
 
-    // validacion de parametros 
+    // validacion de parametros rio u = new Usuario();
+
     if (tareas.contains(proceso)) {
         // inicio de proceso
         if (proceso.equals("guardarUsuario")) {
             String nombre = request.getParameter("nombre");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            //Date fechaCaptura;
+            
             u.llenarUsuario(nombre, email, password);
             if (u.guardarUsuario()) {
                 respuesta += "\"" + proceso + "\" : true";

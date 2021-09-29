@@ -196,9 +196,9 @@ public class Producto {
             p.setIdProducto(rs.getInt("id_producto"));
             p.setIdUsuario(rs.getInt("id_usuario"));
             p.setCategoria(rs.getString("id_categoria"));
-            p.setNombre(rs.getString("nombre"));
+            p.setNombre(rs.getString("nombreProducto"));
             p.setCantidad(rs.getInt("cantidad"));
-            p.setPrecio(rs.getInt("precio"));
+            p.setPrecio(rs.getDouble("precio"));
             p.setEstado(rs.getString("estado"));
             listaProductos.add(p);
         }
