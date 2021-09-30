@@ -188,7 +188,7 @@ public class Producto {
     public List<Producto> listarProductos() throws SQLException{
         ConexionBD conexion = new ConexionBD();
         List<Producto> listaProductos = new ArrayList<>();
-        String sql = " SELECT * FROM productosORDER BY nombreProducto asc";
+        String sql = " SELECT * FROM productos ORDER BY nombreProducto asc";
         ResultSet rs = conexion.consultarBD(sql);
         Producto p;
         while(rs.next()){
