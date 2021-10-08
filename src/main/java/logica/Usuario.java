@@ -1,8 +1,8 @@
 package logica;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+//import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import persistencia.ConexionBD;
@@ -12,9 +12,7 @@ public class Usuario {
     private int idUsuario;
     private String nombre;
     private String email;
-
     private String password;
-    private Date fecha;
 
     public Usuario() {
     }
@@ -51,29 +49,21 @@ public class Usuario {
         this.password = password;
     }
 
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
 
     public void llenarUsuario(String nombre, String email, String password) {
         this.nombre = nombre;
         this.email = email;
         this.password = password;
+
     }
 
     public boolean guardarUsuario() {
         ConexionBD conexion = new ConexionBD();
         String sentencia = "INSERT INTO usuarios (nombreUsuario, "
                 + "email, "
-                + "password, "
-                + "fechaCaptura ) VALUES ('" + this.nombre + "',"
+                + "password ) VALUES ('" + this.nombre + "',"
                 + "'" + this.email + "',"
-                + "'" + this.password + "',"
-                + "'" + this.fecha + "')";
+                + "'" + this.password + "')";
 
         if (conexion.setAutoCommitBD(false)) {
             if (conexion.insertarBD(sentencia)) {
@@ -93,7 +83,7 @@ public class Usuario {
 
     public boolean borrarUsuario(int idUsuario) {
         ConexionBD conexion = new ConexionBD();
-        String sentencia = "DELETE FROM usuarios WHERE idUsaurio = '" + idUsuario + "'";
+        String sentencia = "DELETE FROM usuarios WHERE id_usuario = '" + idUsuario + "'";
 
         if (conexion.setAutoCommitBD(false)) {
             if (conexion.actualizarBD(sentencia)) {
@@ -113,7 +103,7 @@ public class Usuario {
 
     public boolean actualizarUsuario() {
         ConexionBD conexion = new ConexionBD();
-        String sentencia = "UPDATE usuarios SET nombre='" + this.nombre + "', "
+        String sentencia = "UPDATE usuarios SET nombreUsuario='" + this.nombre + "', "
                 + "email='" + this.email + "', "
                 + "password='" + this.password + "'";
 
@@ -135,7 +125,7 @@ public class Usuario {
 
     public List<Usuario> listarUsuario() throws SQLException {
         ConexionBD conexion = new ConexionBD();
-        List<Usuario> listaUsuarios = new ArrayList<>();
+        List<Usuario> listarUsuario = new ArrayList<>();
         String sql = "SELECT * FROM usuarios ORDER BY nombreUsuario asc";
         ResultSet rs = conexion.consultarBD(sql);
         Usuario u;
@@ -145,15 +135,34 @@ public class Usuario {
             u.setNombre(rs.getString("nombreUsuario"));
             u.setEmail(rs.getString("email"));
             u.setPassword(rs.getString("password"));
-            listaUsuarios.add(u);
+            listarUsuario.add(u);
         }
         conexion.cerrarConexion();
-        return listaUsuarios;
+        return listarUsuario;
+    }
+
+    public Usuario getUsuario() throws SQLException {
+        ConexionBD conexion = new ConexionBD();
+        String sql = "select * from usuarios where id_Usuario='" + this.idUsuario + "' and paswword='" + this.password + "'";
+        ResultSet rs = conexion.consultarBD(sql);
+        if (rs.next()) {
+            this.idUsuario = rs.getInt("id_Usuario");
+            this.nombre = rs.getString("nombreUsuario");
+            this.email = rs.getString("email");
+            this.password = rs.getString("password");
+            conexion.cerrarConexion();
+            return this;
+
+        } else {
+            conexion.cerrarConexion();
+            return null;
+        }
+
     }
 
     @Override
     public String toString() {
-        return "Usuario{" + "nombre=" + nombre + ", email=" + email + ", password=" + password + ", fecha=" + fecha + '}';
+        return "Usuario{" + "nombre=" + nombre + ", email=" + email + ", password=" + password + '}';
     }
 
 }

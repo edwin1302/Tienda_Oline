@@ -16,6 +16,7 @@
 
 <%
     // iniciando respuesta json
+    Usuario u1 = new Usuario();
     String respuesta = "{";
 
     // lista de procesos
@@ -27,31 +28,36 @@
     });
 
     String proceso = "" + request.getParameter("proceso");
-    Usuario u = new Usuario();
 
     // validacion de parametros rio u = new Usuario();
-
     if (tareas.contains(proceso)) {
+        respuesta += "\"ok\": true,";
+        
         // inicio de proceso
         if (proceso.equals("guardarUsuario")) {
             String nombre = request.getParameter("nombre");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            
+
+            Usuario u = new Usuario();
             u.llenarUsuario(nombre, email, password);
             if (u.guardarUsuario()) {
                 respuesta += "\"" + proceso + "\" : true";
             } else {
                 respuesta += "\"" + proceso + "\" : false";
             }
+            
         } else if (proceso.equals("eliminarUsuario")) {
+            Usuario u = new Usuario();
             int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
             if (u.borrarUsuario(idUsuario)) {
                 respuesta += "\"" + proceso + "\" : true";
             } else {
                 respuesta += "\"" + proceso + "\" : false";
             }
+            
         } else if (proceso.equals("listarUsuario")) {
+            Usuario u = new Usuario();
             try {
                 List<Usuario> lista = u.listarUsuario();
                 respuesta += "\"" + proceso + "\" : true,\"Usuarios\":" + new Gson().toJson(lista);
@@ -59,11 +65,13 @@
                 respuesta += "\"" + proceso + "\" : true,\"Usuarios\":[]";
                 Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
         } else if (proceso.equals("actualizarProducto")) {
             String nombre = request.getParameter("nombre");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            //Date fechaCaptura;
+
+            Usuario u = new Usuario();
             u.llenarUsuario(nombre, email, password);
             if (u.actualizarUsuario()) {
                 respuesta += "\"" + proceso + "\" : true";
@@ -74,7 +82,7 @@
 
     } else {
         respuesta += "\"ok\" : false,";
-        respuesta += "\"ERROR\" : \"INVALIDO\",";
+        respuesta += "\"error\" : \"INVALID\",";
         respuesta += "\"errorMsg\" : \" Lo sentimos los datos que envio son invalidos. Por favor corrijalos y vuelva intentarlo";
 
     }
